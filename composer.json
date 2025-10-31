@@ -1,0 +1,62 @@
+{
+  "name": "tourze/user-attribute-bundle",
+  "description": "用户属性管理 Bundle，提供用户自定义属性的存储和管理功能",
+  "license": "MIT",
+  "require": {
+    "doctrine/collections": "^2.3",
+    "doctrine/data-fixtures": "^2.0",
+    "doctrine/dbal": "^4.0",
+    "doctrine/doctrine-bundle": "^2.13",
+    "doctrine/doctrine-fixtures-bundle": "^4.0",
+    "doctrine/orm": "^3.0",
+    "doctrine/persistence": "^4.1",
+    "easycorp/easyadmin-bundle": "^4",
+    "knplabs/knp-menu": "^3.7",
+    "nesbot/carbon": "^2.72 || ^3",
+    "symfony/config": "^7.3",
+    "symfony/dependency-injection": "^7.3",
+    "symfony/doctrine-bridge": "^7.3",
+    "symfony/framework-bundle": "^7.3",
+    "symfony/http-kernel": "^7.3",
+    "symfony/routing": "^7.3",
+    "symfony/security-bundle": "^7.3",
+    "symfony/security-core": "^7.3",
+    "symfony/serializer": "^7.3",
+    "symfony/yaml": "^7.3",
+    "tourze/arrayable": "1.*",
+    "tourze/biz-user-bundle": "0.0.*",
+    "tourze/bundle-dependency": "1.*",
+    "tourze/doctrine-ip-bundle": "0.0.*",
+    "tourze/doctrine-snowflake-bundle": "0.1.*",
+    "tourze/doctrine-timestamp-bundle": "0.0.*",
+    "tourze/doctrine-user-bundle": "0.0.*",
+    "tourze/easy-admin-menu-bundle": "0.1.*",
+    "tourze/symfony-dependency-service-loader": "0.0.*",
+    "tourze/user-service-contracts": "0.0.*"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^11.5",
+    "symfony/phpunit-bridge": "^7.3",
+    "tourze/phpunit-base": "1.*",
+    "tourze/phpunit-doctrine-entity": "0.0.*",
+    "tourze/phpunit-symfony-kernel-test": "0.0.*",
+    "tourze/phpunit-symfony-unit-test": "0.0.*",
+    "tourze/phpunit-symfony-web-test": "0.0.*",
+    "tourze/symfony-testing-framework": "0.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tourze\\UserAttributeBundle\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tourze\\UserAttributeBundle\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse src -l 8",
+    "test": "phpunit"
+  }
+}

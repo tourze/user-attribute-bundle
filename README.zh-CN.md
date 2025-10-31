@@ -1,33 +1,33 @@
 # User Attribute Bundle
 
-[![PHP Version](https://img.shields.io/badge/php-%5E8.4-787CB5)](https://php.net)
+[![PHP Version](https://img.shields.io/badge/php-%5E8.1-787CB5)](https://php.net)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/tourze/php-monorepo)
 [![Code Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/tourze/php-monorepo)
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-A Symfony bundle for managing user attributes with key-value storage, IP tracking, and admin interface integration.
+一个用于管理用户属性的 Symfony 包，支持键值存储、IP 追踪和管理界面集成。
 
-## Features
+## 特性
 
-- Key-value storage for user attributes
-- User-specific attribute management
-- IP tracking for operations
-- Snowflake ID generation
-- Admin menu integration
-- REST API support
-- Doctrine ORM integration
+- 用户属性的键值存储
+- 用户特定的属性管理
+- 操作IP追踪
+- 雪花ID生成
+- 管理菜单集成
+- REST API 支持
+- Doctrine ORM 集成
 
-## Installation
+## 安装
 
 ```bash
 composer require tourze/user-attribute-bundle
 ```
 
-## Quick Start
+## 快速开始
 
-1. Add the bundle to your `config/bundles.php`:
+1. 将包添加到您的 `config/bundles.php`：
 
 ```php
 return [
@@ -36,72 +36,72 @@ return [
 ];
 ```
 
-2. Run migrations to create the database table:
+2. 运行迁移以创建数据库表：
 
 ```bash
 php bin/console doctrine:migrations:migrate
 ```
 
-3. The bundle will automatically register services and admin menu items.
+3. 该包将自动注册服务和管理菜单项。
 
-## Configuration
+## 配置
 
-The bundle uses default configuration with the following features:
+该包使用默认配置，具有以下特性：
 
-- **Entity**: `UserAttribute` with IP tracking, timestamps, and blame tracking
-- **Repository**: `UserAttributeRepository` for data operations
-- **Admin Menu**: Automatic integration with EasyAdmin menu system
-- **Database Table**: `biz_user_attribute` with unique constraint on `user_id` and `name`
+- **实体**: `UserAttribute` 具有 IP 追踪、时间戳和责任追踪
+- **仓储**: `UserAttributeRepository` 用于数据操作
+- **管理菜单**: 与 EasyAdmin 菜单系统自动集成
+- **数据库表**: `biz_user_attribute` 在 `user_id` 和 `name` 上具有唯一约束
 
-## Usage
+## 使用方法
 
-### Working with User Attributes
+### 操作用户属性
 
 ```php
 use Tourze\UserAttributeBundle\Entity\UserAttribute;
 use Tourze\UserAttributeBundle\Repository\UserAttributeRepository;
 
-// Create a new user attribute
+// 创建新的用户属性
 $attribute = new UserAttribute();
 $attribute->setUser($user);
 $attribute->setName('preferred_language');
-$attribute->setValue('en');
-$attribute->setRemark('User preference for language');
+$attribute->setValue('zh-CN');
+$attribute->setRemark('用户的语言偏好设置');
 
 $entityManager->persist($attribute);
 $entityManager->flush();
 
-// Retrieve user attributes
+// 检索用户属性
 $repository = $entityManager->getRepository(UserAttribute::class);
 $attributes = $repository->findBy(['user' => $user]);
 ```
 
-### REST API Integration
+### REST API 集成
 
-The entity supports REST API serialization with groups:
+实体支持带有组的REST API序列化：
 
 ```php
-// API response format
+// API 响应格式
 $apiData = $attribute->retrieveApiArray();
-// Returns: ['id' => 123, 'name' => 'preferred_language', 'value' => 'en']
+// 返回: ['id' => 123, 'name' => 'preferred_language', 'value' => 'zh-CN']
 
-// Admin interface format
+// 管理界面格式
 $adminData = $attribute->retrieveAdminArray();
-// Returns: ['id' => 123, 'name' => 'preferred_language', 'value' => 'en', 'remark' => 'User preference']
+// 返回: ['id' => 123, 'name' => 'preferred_language', 'value' => 'zh-CN', 'remark' => '用户偏好']
 ```
 
-### Admin Menu Integration
+### 管理菜单集成
 
-The bundle automatically adds a "User Attribute Management" menu item under "User Module" in the admin interface.
+该包会自动在管理界面的"用户模块"下添加"用户属性管理"菜单项。
 
-## Advanced Usage
+## 高级用法
 
-### Custom Repository Methods
+### 自定义仓储方法
 
-You can extend the repository to add custom query methods:
+您可以扩展仓储以添加自定义查询方法：
 
 ```php
-// In your application
+// 在您的应用程序中
 class CustomUserAttributeRepository extends UserAttributeRepository
 {
     public function findAttributesByPrefix(UserInterface $user, string $prefix): array
@@ -117,12 +117,12 @@ class CustomUserAttributeRepository extends UserAttributeRepository
 }
 ```
 
-### Bulk Operations
+### 批量操作
 
-For performance-critical operations, consider bulk updates:
+对于性能关键的操作，考虑批量更新：
 
 ```php
-// Bulk update user attributes
+// 批量更新用户属性
 $qb = $entityManager->createQueryBuilder()
     ->update(UserAttribute::class, 'ua')
     ->set('ua.value', ':newValue')
@@ -135,9 +135,9 @@ $qb = $entityManager->createQueryBuilder()
 $qb->getQuery()->execute();
 ```
 
-### Event Handling
+### 事件处理
 
-You can listen to Doctrine events for custom logic:
+您可以监听 Doctrine 事件来实现自定义逻辑：
 
 ```php
 use Doctrine\ORM\Events;
@@ -148,7 +148,7 @@ class UserAttributeListener
 {
     public function prePersist(UserAttribute $attribute): void
     {
-        // Custom logic before saving
+        // 保存前的自定义逻辑
         if ($attribute->getName() === 'sensitive_data') {
             $attribute->setValue(hash('sha256', $attribute->getValue()));
         }
@@ -156,19 +156,19 @@ class UserAttributeListener
 }
 ```
 
-## Dependencies
+## 依赖项
 
-- PHP 8.4+
+- PHP 8.1+
 - Symfony 7.3+
 - Doctrine ORM 3.0+
 - KnpMenu 3.7+
 - EasyAdmin 4.0+
-- Various tourze/* packages for extended functionality
+- 各种 tourze/* 包用于扩展功能
 
-## Contributing
+## 贡献
 
-Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+有关如何为此项目做出贡献的详细信息，请参阅 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-## License
+## 许可证
 
-This bundle is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+该包在 MIT 许可证下发布。有关详细信息，请参阅 [LICENSE](LICENSE) 文件。
