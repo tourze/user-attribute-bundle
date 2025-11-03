@@ -50,11 +50,12 @@ final class UserAttributeCrudController extends AbstractCrudController
     {
         yield IdField::new('id', 'ID')->hideOnForm();
 
+        // 关联用户字段：
+        // - 不使用 autocomplete，避免在未配置关联 CRUD 控制器时抛出异常
+        // - 不强制指定 form type 的 class，让 Doctrine 在测试中通过 resolve_target_entities 动态解析到正确的实体
         yield AssociationField::new('user', '用户')
             ->setRequired(true)
-            ->autocomplete()
             ->formatValue(fn ($value, UserAttribute $entity) => $this->formatUserDisplay($entity->getUser()))
-            ->setFormTypeOption('class', TestUser::class)
         ;
 
         yield TextField::new('name', '属性名')

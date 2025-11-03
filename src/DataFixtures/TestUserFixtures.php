@@ -8,7 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\Attribute\When;
-use Tourze\UserAttributeBundle\Entity\TestUser;
+use Tourze\UserServiceContracts\UserManagerInterface;
 
 /**
  * 测试用户数据填充
@@ -19,6 +19,10 @@ class TestUserFixtures extends Fixture implements FixtureGroupInterface
 {
     public const TEST_USER_REFERENCE = 'test-user-123';
 
+    public function __construct(private readonly UserManagerInterface $userManager)
+    {
+    }
+
     public static function getGroups(): array
     {
         return [
@@ -28,14 +32,17 @@ class TestUserFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
-        // 创建测试用户
-        $testUser = new TestUser();
-        $testUser->setIdentifier('test-user-123');
-        $manager->persist($testUser);
+        // 通过 UserManager 创建与测试环境映射一致的用户实体
+        $user = $this->userManager->createUser(
+            userIdentifier: self::TEST_USER_REFERENCE,
+            password: 'password',
+            roles: ['ROLE_USER']
+        );
+
+        $manager->persist($user);
+        $manager->flush();
 
         // 添加引用以供其他 fixtures 使用
-        $this->addReference(self::TEST_USER_REFERENCE, $testUser);
-
-        $manager->flush();
+        $this->addReference(self::TEST_USER_REFERENCE, $user);
     }
 }

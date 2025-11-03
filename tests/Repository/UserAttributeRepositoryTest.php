@@ -20,23 +20,6 @@ final class UserAttributeRepositoryTest extends AbstractRepositoryTestCase
     protected function onSetUp(): void
     {
         $this->repository = self::getService(UserAttributeRepository::class);
-
-        // 检查当前测试是否需要 DataFixtures 数据
-        $currentTest = $this->name();
-        if ('testCountWithDataFixtureShouldReturnGreaterThanZero' === $currentTest) {
-            $this->createTestDataForCountTest();
-        }
-    }
-
-    private function createTestDataForCountTest(): void
-    {
-        $user = $this->createNormalUser('test@example.com', 'password123');
-
-        $attribute = new UserAttribute();
-        $attribute->setUser($user);
-        $attribute->setName('test_attribute');
-        $attribute->setValue('test_value');
-        $this->repository->save($attribute);
     }
 
     public function testCanBeInstantiated(): void
@@ -261,8 +244,8 @@ final class UserAttributeRepositoryTest extends AbstractRepositoryTestCase
 
         $results = $this->repository->createQueryBuilder('ua')
             ->join('ua.user', 'u')
-            ->where('u.email = :email')
-            ->setParameter('email', 'test@example.com')
+            ->where('u.userIdentifier = :userIdentifier')
+            ->setParameter('userIdentifier', 'test@example.com')
             ->getQuery()
             ->getResult()
         ;
