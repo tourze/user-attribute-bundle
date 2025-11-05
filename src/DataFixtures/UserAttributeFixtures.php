@@ -11,8 +11,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Tourze\UserServiceContracts\UserManagerInterface;
 use Tourze\UserAttributeBundle\Entity\UserAttribute;
+use Tourze\UserServiceContracts\UserManagerInterface;
 
 /**
  * 用户属性数据填充
