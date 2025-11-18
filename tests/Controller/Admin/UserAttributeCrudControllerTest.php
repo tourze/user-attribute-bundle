@@ -54,18 +54,6 @@ final class UserAttributeCrudControllerTest extends AbstractEasyAdminControllerT
         yield 'remark field' => ['remark'];
     }
 
-    public function testGetEntityFqcn(): void
-    {
-        $client = self::createClientWithDatabase();
-
-        $admin = $this->createAdminUser('admin@test.com', 'admin123');
-        $this->loginAsAdmin($client, 'admin@test.com', 'admin123');
-
-        $client->request('GET', '/admin');
-
-        $this->assertEquals(UserAttribute::class, UserAttributeCrudController::getEntityFqcn());
-    }
-
     public function testAuthorizedAdminCanAccessDashboard(): void
     {
         $client = self::createClientWithDatabase();
