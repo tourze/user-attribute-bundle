@@ -4,7 +4,7 @@ namespace Tourze\UserAttributeBundle\DependencyInjection;
 
 use Tourze\SymfonyDependencyServiceLoader\AutoExtension;
 
-class UserAttributeExtension extends AutoExtension
+final class UserAttributeExtension extends AutoExtension
 {
     protected function getConfigDir(): string
     {
